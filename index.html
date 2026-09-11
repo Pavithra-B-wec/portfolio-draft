@@ -2,12 +2,50 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="description" content="Portfolio of Pavithra Balamurugan - Full-Stack & AI Developer from Puducherry. Projects in Flask, React, Machine Learning, XAI and geospatial dashboards.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pavithra B. — Full-Stack &amp; AI Developer</title>
+<title>Pavithra Balamurugan — Full-Stack &amp; AI Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+/* ---- rebuild additions ---- */
+if (window.gsap && matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.globalTimeline.clear();
+
+/* scroll-spy */
+var spy = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      document.querySelectorAll('.nav-links a').forEach(function(a){
+        a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, {rootMargin:'-40% 0px -55% 0px'});
+['about','education','skills','projects','experience','certificates','achievements','contact'].forEach(function(id){
+  var s = document.getElementById(id); if(s) spy.observe(s);
+});
+
+/* toggles */
+function wireToggle(btnId, boxId, openTxt, closeTxt){
+  var b = document.getElementById(btnId), box = document.getElementById(boxId);
+  if(b && box) b.addEventListener('click', function(){
+    var show = box.hasAttribute('hidden');
+    if(show){ box.removeAttribute('hidden'); b.innerHTML = closeTxt; }
+    else { box.setAttribute('hidden',''); b.innerHTML = openTxt; }
+    if(window.ScrollTrigger) ScrollTrigger.refresh();
+  });
+}
+wireToggle('toggleProjects','moreProjects','View 6 more projects &#9662;','Show fewer projects &#9652;');
+wireToggle('toggleCerts','moreCerts','View all 19 certificates &#9662;','Show fewer certificates &#9652;');
+
+/* back to top */
+var toTop = document.createElement('button');
+toTop.id = 'toTop'; toTop.setAttribute('aria-label','Back to top'); toTop.innerHTML = '&#8593;';
+document.body.appendChild(toTop);
+toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+addEventListener('scroll', function(){ toTop.classList.toggle('show', scrollY > 600); }, {passive:true});
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
   :root{
@@ -293,6 +331,41 @@
     .platform-grid{grid-template-columns:repeat(2,1fr);}
     .stat-row{grid-template-columns:repeat(3,1fr);}
   }
+
+  /* ---- rebuild additions ---- */
+  .nav-links a.active{color:#fff;border-bottom:2px solid #C7273D;padding-bottom:3px;}
+  .more-toggle{display:block;margin:34px auto 0;padding:13px 30px;background:transparent;color:var(--ink);
+    border:1.5px solid var(--ink);border-radius:3px;font:700 0.78rem 'Inter';letter-spacing:0.1em;
+    text-transform:uppercase;cursor:pointer;transition:all .25s ease;box-shadow:0 5px 0 rgba(20,18,16,0.18);}
+  .more-toggle:hover{background:var(--ink);color:#fff;transform:translateY(-2px);}
+  .project-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center;}
+  .pa-btn{font-size:0.72rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+    padding:8px 15px;border-radius:3px;text-decoration:none;transition:all .2s ease;}
+  .pa-btn.gh{background:var(--ink);color:#f2efe9;}
+  .pa-btn.gh:hover{background:var(--red);}
+  .pa-btn.demo{background:var(--red);color:#fff;}
+  .pa-btn.demo:hover{background:var(--red-2);}
+  .pa-note{font-size:0.68rem;color:#a19a8b;font-style:italic;}
+  .edu-timeline{position:relative;padding-left:26px;border-left:2px solid rgba(20,18,16,0.12);display:flex;flex-direction:column;gap:26px;}
+  .edu-item{position:relative;}
+  .edu-dot{position:absolute;left:-33px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--red);
+    box-shadow:0 0 0 4px var(--paper);}
+  .edu-card{border:1.5px solid rgba(20,18,16,0.14);border-radius:6px;padding:22px 24px;background:var(--paper);
+    transition:border-color .25s ease,transform .25s ease;}
+  .edu-card:hover{border-color:var(--red);transform:translateX(5px);}
+  .edu-tag{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);}
+  .edu-card h3{font-family:'Big Shoulders Display';font-weight:800;font-size:1.35rem;text-transform:uppercase;margin:8px 0 6px;}
+  .edu-card p{margin:0;font-size:0.92rem;color:#4b453c;}
+  #toTop{position:fixed;bottom:26px;right:26px;width:46px;height:46px;border-radius:50%;background:var(--ink);
+    color:#f2efe9;border:0;font-size:1.15rem;cursor:pointer;z-index:150;opacity:0;pointer-events:none;
+    transition:opacity .3s ease,transform .25s ease;transform:translateY(10px);box-shadow:0 8px 20px -8px rgba(20,18,16,0.5);}
+  #toTop.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+  #toTop:hover{background:var(--red);}
+  a:focus-visible,button:focus-visible{outline:2.5px solid var(--red);outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    html{scroll-behavior:auto;}
+  }
 </style>
 </head>
 <body>
@@ -302,6 +375,7 @@
     <div class="logo">P<span>.</span>B</div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Internships</a></li>
@@ -388,6 +462,38 @@
 </section>
 
 <!-- ================= SKILLS ================= -->
+<!-- ================= EDUCATION ================= -->
+<section class="section-shell" id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">
+        <svg width="14" height="14" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="#9A1B2F"/></svg>
+        Academic Background
+      </div>
+      <h2 class="display">Education.</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="edu-timeline">
+      <div class="edu-item">
+        <span class="edu-dot"></span>
+        <div class="edu-card">
+          <span class="edu-tag">2023 &mdash; 2027 &middot; Pursuing</span>
+          <h3>B.Tech &mdash; Information Science &amp; Engineering</h3>
+          <p>Women&rsquo;s Engineering College, Puducherry</p>
+        </div>
+      </div>
+      <div class="edu-item">
+        <span class="edu-dot"></span>
+        <div class="edu-card">
+          <span class="edu-tag">Higher Secondary (12th) &middot; Computer Science Group</span>
+          <h3>Immaculate Heart of Mary Higher Secondary School</h3>
+          <p>Ariyankuppam, Puducherry &middot; Grade: <b>74%</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section-shell alt" id="skills">
   <div class="wrap">
     <div class="section-head">
@@ -436,48 +542,48 @@
       <div class="rule"></div>
     </div>
     <div class="project-grid" id="projectGrid">
-
       <div class="project-card featured">
         <div class="project-top"><h3>EncroWatch — Water Body Encroachment Detector</h3>
           <a class="ext" href="https://github.com/pavithraB-wec/EncroWatch" target="_blank" rel="noopener">↗</a></div>
         <p>Geospatial monitoring platform detecting encroachment on water bodies in Puducherry UT using Google Earth Engine and Sentinel-2 / Landsat / JRC GSW / GHSL datasets. Interactive dashboard for trend analysis, typing, and downloadable reports.</p>
         <div class="tag-row"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Earth Engine</span><span class="tag">REST APIs</span></div>
-      </div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/EncroWatch" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
 
       <div class="project-card featured">
         <div class="project-top"><h3>SmartEye — Explainable Ocular AI</h3>
           <a class="ext" href="https://github.com/pavithraB-wec/SmartEye_Technology_An_Explainable_ocular_AI" target="_blank" rel="noopener">↗</a></div>
         <p>Explainable AI ocular screening app classifying eye images (Normal, Diabetic Retinopathy, Glaucoma, Cataract) with Grad-CAM / LIME / SHAP-style visual explanations and confidence scores, built on ResNet-50.</p>
         <div class="tag-row"><span class="tag">XAI</span><span class="tag">Grad-CAM</span><span class="tag">ResNet-50</span><span class="tag">Canvas API</span></div>
-      </div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/SmartEye_Technology_An_Explainable_ocular_AI" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
 
+      <div class="project-card featured">
+        <div class="project-top"><h3>ScholarPath India</h3>
+          <a class="ext" href="https://github.com/pavithraB-wec/scholarpath-india" target="_blank" rel="noopener">↗</a></div>
+        <p>Civic-tech scholarship discovery portal for Indian students with centralized search, a 4-step eligibility checker, document checklists and deadline tracking.</p>
+        <div class="tag-row"><span class="tag">WordPress</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">ACF</span></div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/scholarpath-india" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
+
+      <div class="project-card featured">
+        <div class="project-top"><h3>CareFlow MediCareConnect</h3>
+          <a class="ext" href="https://github.com/pavithraB-wec/CareFlow_MediCareConnect_Unified_Dashboard" target="_blank" rel="noopener">↗</a></div>
+        <p>Unified healthcare dashboard linking Patient and Hospital portals — appointments, records, emergency services, bed management, prescriptions and QR-based history lookup.</p>
+        <div class="tag-row"><span class="tag">React.js</span><span class="tag">React Router</span><span class="tag">Auth Context</span></div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/CareFlow_MediCareConnect_Unified_Dashboard" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
+
+      <div class="project-card featured">
+        <div class="project-top"><h3>E-Book Chapter &amp; Section Search</h3>
+          <a class="ext" href="https://github.com/pavithraB-wec/ebook-chapter-section-search-system" target="_blank" rel="noopener">↗</a></div>
+        <p>Flask-based information retrieval app that lets users upload PDF books and search content at chapter/section level using TF-IDF and Cosine Similarity ranking.</p>
+        <div class="tag-row"><span class="tag">Flask</span><span class="tag">TF-IDF</span><span class="tag">PyPDF2</span></div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/ebook-chapter-section-search-system" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
+    </div>
+    <div id="moreProjects" hidden>
       <div class="project-card">
         <div class="project-top"><h3>Global Plastic Pollution Analysis</h3>
           <a class="ext" href="https://github.com/pavithraB-wec/global-plastic-pollution-analysis" target="_blank" rel="noopener">↗</a></div>
         <p>Analyzed global per-capita plastic waste against GDP per capita — cleaning, EDA, visualization, correlation analysis and a Linear Regression model (R² = 0.1448), showing GDP alone doesn't explain waste levels.</p>
         <div class="tag-row"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Scikit-learn</span></div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-top"><h3>ScholarPath India</h3>
-          <a class="ext" href="https://github.com/pavithraB-wec/scholarpath-india" target="_blank" rel="noopener">↗</a></div>
-        <p>Civic-tech scholarship discovery portal for Indian students with centralized search, a 4-step eligibility checker, document checklists and deadline tracking.</p>
-        <div class="tag-row"><span class="tag">WordPress</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">ACF</span></div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-top"><h3>CareFlow MediCareConnect</h3>
-          <a class="ext" href="https://github.com/pavithraB-wec/CareFlow_MediCareConnect_Unified_Dashboard" target="_blank" rel="noopener">↗</a></div>
-        <p>Unified healthcare dashboard linking Patient and Hospital portals — appointments, records, emergency services, bed management, prescriptions and QR-based history lookup.</p>
-        <div class="tag-row"><span class="tag">React.js</span><span class="tag">React Router</span><span class="tag">Auth Context</span></div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-top"><h3>E-Book Chapter &amp; Section Search</h3>
-          <a class="ext" href="https://github.com/pavithraB-wec/ebook-chapter-section-search-system" target="_blank" rel="noopener">↗</a></div>
-        <p>Flask-based information retrieval app that lets users upload PDF books and search content at chapter/section level using TF-IDF and Cosine Similarity ranking.</p>
-        <div class="tag-row"><span class="tag">Flask</span><span class="tag">TF-IDF</span><span class="tag">PyPDF2</span></div>
-      </div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/global-plastic-pollution-analysis" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
 
       <div class="project-card">
         <div class="project-top"><h3>SmartMart — AI Billing System</h3>
@@ -485,37 +591,37 @@
         <p>Detects supermarket products from images using YOLOv8 and generates itemized bills with predicted prices — automated identification, pricing and PDF/JSON bill generation in one workflow.</p>
         <div class="tag-row"><span class="tag">YOLOv8</span><span class="tag">XGBoost</span><span class="tag">OpenCV</span></div>
         <div class="no-link-note">Repository link not published yet</div>
-      </div>
+      <div class="project-actions"><span class="pa-note">Repo not published yet &mdash; source available on request</span></div></div>
 
       <div class="project-card">
         <div class="project-top"><h3>Fancy Real-Time Chat App</h3>
           <a class="ext" href="https://github.com/pavithraB-wec/basic-chat-app" target="_blank" rel="noopener">↗</a></div>
         <p>Real-time multi-user, multi-room chat app with timestamps, avatars, emojis and a responsive gradient UI, built on Socket.io for live message updates across rooms.</p>
         <div class="tag-row"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Socket.io</span></div>
-      </div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/basic-chat-app" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
 
       <div class="project-card">
         <div class="project-top"><h3>URL Shortener</h3>
           <a class="ext" href="https://github.com/pavithraB-wec/url-shortener" target="_blank" rel="noopener">↗</a></div>
         <p>Flask app converting long URLs into short, shareable links with clipboard copy, preview, and SQLite storage — unique short codes, fast redirection and validation.</p>
         <div class="tag-row"><span class="tag">Flask</span><span class="tag">SQLite</span></div>
-      </div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/url-shortener" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
 
       <div class="project-card">
         <div class="project-top"><h3>WEC ISE — CGPA / SGPA Calculator</h3>
           <a class="ext" href="https://github.com/pavithraB-wec/wec-ise-cgpa-calculator" target="_blank" rel="noopener">↗</a></div>
         <p>Responsive calculator for ISE students supporting semester-wise SGPA, overall CGPA, percentage conversion, auto-save and PDF export, with a light/dark mode.</p>
         <div class="tag-row"><span class="tag">JavaScript</span><span class="tag">LocalStorage</span></div>
-      </div>
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/wec-ise-cgpa-calculator" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
 
       <div class="project-card">
         <div class="project-top"><h3>Online Quiz System (OQS)</h3>
           <a class="ext" href="https://github.com/pavithraB-wec/OnlineQuizSystem" target="_blank" rel="noopener">↗</a></div>
         <p>Web quiz platform with Admin, Teacher and Student roles supporting course/MCQ management, quiz attempts, automated scoring and analytics.</p>
         <div class="tag-row"><span class="tag">Flask</span><span class="tag">Jinja2</span><span class="tag">Bootstrap 5</span></div>
-      </div>
-
+      <div class="project-actions"><a class="pa-btn gh" href="https://github.com/pavithraB-wec/OnlineQuizSystem" target="_blank" rel="noopener">GitHub &#8599;</a></div></div>
     </div>
+    <button class="more-toggle" id="toggleProjects" type="button">View 6 more projects &#9662;</button>
   </div>
 </section>
 
@@ -550,26 +656,28 @@
     </div>
     <div class="cert-grid" id="certGrid">
       <div class="cert-card has-image" data-cert="puduvai"><div class="cert-main"><b>Puduvai Innovation Competition 2026</b><span>Ministry of Education · Level 1 Selection · May 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="rocketry"><div class="cert-main"><b>Rocketry Workshop, Genesis '23</b><span>Aeroin SpaceTech · PTU ECE Dept · 2023</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="amazon_q"><div class="cert-main"><b>Amazon Q Developer — Getting Started</b><span>AWS Training &amp; Certification · May 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="udacity_aws_ai"><div class="cert-main"><b>AWS AI Practitioner Challenge</b><span>Udacity, Part of Accenture · Apr 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="deloitte_cyber"><div class="cert-main"><b>Cyber Job Simulation — Deloitte</b><span>Forage · Feb 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="power_bi"><div class="cert-main"><b>Mastering Power BI: Data to Dashboard</b><span>Udemy · Apr 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="ai_fluency"><div class="cert-main"><b>AI Fluency for Students</b><span>Anthropic · Mar 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="cloud_fund"><div class="cert-main"><b>Cloud Computing Fundamentals</b><span>Udemy · Feb 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card"><div class="cert-main"><b>Develop Soft Skills that Industry Demands</b><span>TCS iON · Feb 2026</span></div><span class="cert-icon">↗</span></div>
-      <div class="cert-card has-image" data-cert="nptel_soft_skills"><div class="cert-main"><b>Developing Soft Skills and Personality</b><span>NPTEL / IIT Kanpur · Elite, 84% · Aug–Oct 2025</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="python_ds_pro"><div class="cert-main"><b>Python for Data Science Pro</b><span>Udemy · Feb 2025</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="python_ml"><div class="cert-main"><b>Hands-On Python Machine Learning</b><span>Udemy · Mar 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="google_ads"><div class="cert-main"><b>Google Ads Search Certification</b><span>Google Skillshop · Jan 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="google_analytics"><div class="cert-main"><b>Google Analytics Certification</b><span>Google · Jan 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="cisco_ds"><div class="cert-main"><b>Introduction to Data Science</b><span>Cisco Networking Academy · Jan 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="c_programming"><div class="cert-main"><b>C Programming Masterclass</b><span>Udemy · Mar 2026</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="digital_marketing"><div class="cert-main"><b>Digital Marketing Automation</b><span>Udemy · Feb 2025</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="logo_design_ai"><div class="cert-main"><b>Designing Logo, Vector Arts, Icons &amp; QR with AI</b><span>Udemy · Feb 2025</span></div><span class="cert-icon">⊕</span></div>
-      <div class="cert-card has-image" data-cert="seo_linkedin"><div class="cert-main"><b>Develop Your SEO Skills</b><span>LinkedIn Learning · Aug 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="rocketry"><div class="cert-main"><b>Rocketry Workshop, Genesis '23</b><span>Aeroin SpaceTech · PTU ECE Dept · 2023</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="amazon_q"><div class="cert-main"><b>Amazon Q Developer — Getting Started</b><span>AWS Training &amp; Certification · May 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="udacity_aws_ai"><div class="cert-main"><b>AWS AI Practitioner Challenge</b><span>Udacity, Part of Accenture · Apr 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="deloitte_cyber"><div class="cert-main"><b>Cyber Job Simulation — Deloitte</b><span>Forage · Feb 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="power_bi"><div class="cert-main"><b>Mastering Power BI: Data to Dashboard</b><span>Udemy · Apr 2026</span></div><span class="cert-icon">⊕</span></div>
     </div>
-    <p class="cert-note">Certificates marked <b>⊕</b> open as an image right here. The one marked <b>↗</b> is stored in the certificate drive folder — <a href="https://drive.google.com/drive/folders/177YlwDPTQGDq0-usS8EVUh6vkcxC0j3f?usp=sharing" target="_blank" rel="noopener">open full drive folder ↗</a>.</p>
+    <div id="moreCerts" class="cert-grid" hidden style="margin-top:16px">
+      <div class="cert-card has-image" data-cert="ai_fluency"><div class="cert-main"><b>AI Fluency for Students</b><span>Anthropic · Mar 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="cloud_fund"><div class="cert-main"><b>Cloud Computing Fundamentals</b><span>Udemy · Feb 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card"><div class="cert-main"><b>Develop Soft Skills that Industry Demands</b><span>TCS iON · Feb 2026</span></div><span class="cert-icon">↗</span></div>
+<div class="cert-card has-image" data-cert="nptel_soft_skills"><div class="cert-main"><b>Developing Soft Skills and Personality</b><span>NPTEL / IIT Kanpur · Elite, 84% · Aug–Oct 2025</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="python_ds_pro"><div class="cert-main"><b>Python for Data Science Pro</b><span>Udemy · Feb 2025</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="python_ml"><div class="cert-main"><b>Hands-On Python Machine Learning</b><span>Udemy · Mar 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="google_ads"><div class="cert-main"><b>Google Ads Search Certification</b><span>Google Skillshop · Jan 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="google_analytics"><div class="cert-main"><b>Google Analytics Certification</b><span>Google · Jan 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="cisco_ds"><div class="cert-main"><b>Introduction to Data Science</b><span>Cisco Networking Academy · Jan 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="c_programming"><div class="cert-main"><b>C Programming Masterclass</b><span>Udemy · Mar 2026</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="digital_marketing"><div class="cert-main"><b>Digital Marketing Automation</b><span>Udemy · Feb 2025</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="logo_design_ai"><div class="cert-main"><b>Designing Logo, Vector Arts, Icons &amp; QR with AI</b><span>Udemy · Feb 2025</span></div><span class="cert-icon">⊕</span></div>
+<div class="cert-card has-image" data-cert="seo_linkedin"><div class="cert-main"><b>Develop Your SEO Skills</b><span>LinkedIn Learning · Aug 2026</span></div><span class="cert-icon">⊕</span></div>
+    </div>
+    <button class="more-toggle" id="toggleCerts" type="button">View all 19 certificates &#9662;</button>
   </div>
 </section>
 
